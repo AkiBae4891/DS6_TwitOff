@@ -11,12 +11,18 @@ def create_app():
 
 
     # stop tracking modifications
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
 
 
     @app.route('/')
     def root():
         users = User.query.all()
         return render_template('base.html', title='Home', users=users)
+
+    @app.route('/reset_DB')
+    def reset_DB():
+        DB.drop_all()
+        DB.create_all()
+        return "DB reset"
     return app
 
